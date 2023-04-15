@@ -37,3 +37,6 @@ npm-debug.log
 
 # Ignore vim swap files
 *.swp
+
+# Ignore songs registered
+/data/
