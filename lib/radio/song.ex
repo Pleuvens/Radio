@@ -6,7 +6,8 @@ defmodule Song do
     field :name, :string
     field :artists, :string
     field :path, :string
-    belongs_to :playlist, Playlist
+    has_many :playlists_songs, PlaylistSong
+    has_many :playlists, through: [:playlists_songs, :playlist]
   end
 
   def changeset(song, params \\ %{}) do

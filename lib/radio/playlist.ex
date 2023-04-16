@@ -5,7 +5,8 @@ defmodule Playlist do
   schema "playlists" do
     field :name, :string
     field :theme, :string
-    has_many :songs, Song
+    has_many :playlists_songs, PlaylistSong
+    has_many :songs, through: [:playlists_songs, :song]
   end
 
   def changeset(playlist, params \\ %{}) do
