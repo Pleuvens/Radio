@@ -5,6 +5,7 @@ defmodule Song do
   schema "songs" do
     field :name, :string
     field :artists, :string
+    field :duration, :integer
     field :path, :string
     has_many :playlists_songs, PlaylistSong
     has_many :playlists, through: [:playlists_songs, :playlist]
@@ -12,7 +13,7 @@ defmodule Song do
 
   def changeset(song, params \\ %{}) do
     song
-    |> cast(params, [:name, :artists, :path])
-    |> validate_required([:name, :artists, :path])
+    |> cast(params, [:name, :artists, :duration, :path])
+    |> validate_required([:name, :artists, :duration, :path])
   end
 end
