@@ -15,4 +15,11 @@ defmodule Playlist do
     |> cast(params, [:name, :theme])
     |> validate_required([:name])
   end
+
+  defmodule API do
+    def get(_id) do
+      Path.wildcard("/home/fervil/Documents/radio/data/songs/*.mp3")
+      |> Enum.map(fn p -> "/api/song/#{Path.split(p) |> List.last()}" end)
+    end
+  end
 end

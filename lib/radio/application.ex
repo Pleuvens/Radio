@@ -17,9 +17,10 @@ defmodule Radio.Application do
       # Start Finch
       {Finch, name: Radio.Finch},
       # Start the Endpoint (http/https)
-      RadioWeb.Endpoint
+      RadioWeb.Endpoint,
       # Start a worker by calling: Radio.Worker.start_link(arg)
       # {Radio.Worker, arg}
+      {Registry, keys: :unique, name: :radio_player_registry}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

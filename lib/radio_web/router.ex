@@ -17,7 +17,13 @@ defmodule RadioWeb.Router do
   scope "/", RadioWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", RadioPlayer
+  end
+
+  scope "/api", RadioWeb do
+    pipe_through :api
+
+    get "/song/:name", RadioController, :get_song
   end
 
   # Other scopes may use custom stacks.
