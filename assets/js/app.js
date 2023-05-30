@@ -30,6 +30,14 @@ topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
 window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
 window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
 
+// Event pushed via elixir
+window.addEventListener("phx:start-player", (e) => {
+  let audio = document.getElementById("player")
+  audio.src = e.detail.song.name
+  audio.currentTime = e.detail.time
+  audio.play()
+})
+
 // connect if there are any LiveViews on the page
 liveSocket.connect()
 

@@ -11,11 +11,12 @@ defmodule RadioPlayer do
   end
 
   defp play_song(song, time) do
-    IO.inspect("Now playing #{song} at #{time} seconds")
+    IO.inspect("Now playing #{song.name} at #{time} seconds")
+    Phoenix.PubSub.broadcast(Radio.PubSub, "radio_playertest", %{song: song, time: time})
   end
 
-  def start_player(playlist_id, song \\ 0, time \\ 0) do
-    GenServer.call(via_tuple(playlist_id), {:start, song, time})
+  def get_current_song(playlist_id) do
+    GenServer.call(via_tuple(playlist_id), :get_current_song)
   end
 
   @impl true
@@ -26,13 +27,29 @@ defmodule RadioPlayer do
       s_played: 0
     }
 
-    {:ok, state}
+    play_song(Enum.at(state.songs, state.current_song), state.s_played)
+    {:ok, state, 1000}
   end
 
   @impl true
-  def handle_call({:start, song, time}, _from, state) do
-    play_song(Enum.at(state.songs, song), time)
-    new_state = %{state | current_song: song, s_played: time}
-    {:reply, new_state, new_state}
+  def handle_call(:get_current_song, _from, state) do
+    {:reply, state, state, 10}
+  end
+
+  @impl true
+  def handle_info(:timeout, state) do
+    new_elapsed_time = state.s_played + 1
+    song = Enum.at(state.songs, state.current_song)
+    if song.duration - new_elapsed_time > 0 do
+      {:noreply, %{state | s_played: new_elapsed_time}, 1000}
+    else
+      next_song = cond do
+        state.current_song + 1 >= length(state.songs) -> 0
+        true -> state.current_song + 1
+      end
+
+      play_song(Enum.at(state.songs, next_song), 0)
+      {:noreply, %{state | current_song: next_song, s_played: 0}, 1000}
+    end
   end
 end
