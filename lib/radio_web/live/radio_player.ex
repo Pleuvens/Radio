@@ -10,13 +10,12 @@ defmodule RadioWeb.RadioPlayer do
     {:ok, assign(socket, %{})}
   end
 
-  def handle_info(params, socket) do
-    IO.inspect(params, label: "handle_info params")
-    {:noreply, push_event(socket, "start-player", %{song: params.song, time: params.time})}
-  end
-
   def handle_event("start_player", _params, socket) do
     r = RadioPlayer.get_current_song("test")
     {:noreply, push_event(socket, "start-player", %{song: Enum.at(r.songs, r.current_song), time: r.s_played})}
+  end
+
+  def handle_event("stop_player", _params, socket) do
+    {:noreply, push_event(socket, "stop-player", %{})}
   end
 end

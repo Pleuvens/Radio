@@ -37,6 +37,10 @@ window.addEventListener("phx:start-player", (e) => {
   audio.currentTime = e.detail.time
   audio.play()
 })
+window.addEventListener("phx:stop-player", (e) => {
+  let audio = document.getElementById("player")
+  audio.pause()
+})
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()
