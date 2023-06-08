@@ -16,4 +16,17 @@ defmodule Song do
     |> cast(params, [:name, :artists, :duration, :path])
     |> validate_required([:name, :artists, :duration, :path])
   end
+
+  defmodule API do
+    def get(id) do
+      Radio.Repo.get!(Song, id)
+    end
+
+    def put(name, artists, duration, path, position, playlist) do
+      {_, song} = Song.changeset(%Song{}, %{name: name, artists: artists, duration: duration, path: path})
+        |> Radio.Repo.insert()
+      PlaylistSong.API.put(position, playlist, song)
+      song
+    end
+  end
 end

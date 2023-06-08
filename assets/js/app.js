@@ -33,7 +33,7 @@ window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
 // Event pushed via elixir
 window.addEventListener("phx:start-player", (e) => {
   let audio = document.getElementById("player")
-  audio.src = e.detail.song.name
+  audio.src = e.detail.song.path
   audio.currentTime = e.detail.time
   audio.play()
 })

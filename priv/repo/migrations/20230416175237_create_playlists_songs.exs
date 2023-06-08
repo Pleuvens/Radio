@@ -4,10 +4,10 @@ defmodule Radio.Repo.Migrations.CreatePlaylistsSongs do
   def change do
     create table(:playlists_songs) do
       add :position, :integer
-      add :playlist, references(:playlists)
-      add :song, references(:songs)
+      add :playlist_id, references(:playlists)
+      add :song_id, references(:songs)
     end
 
-    create unique_index(:playlists_songs, [:playlist, :song])
+    create unique_index(:playlists_songs, [:playlist_id, :song_id])
   end
 end

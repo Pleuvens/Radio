@@ -1,5 +1,15 @@
 defmodule RadioPlayer do
   use GenServer
+  import Ecto.Query
+
+  def init_db do
+    query = from p in Playlist, where: p.name == "test"
+    if !Radio.Repo.exists?(query) do
+      {_, p} = Playlist.API.put("test")
+      Song.API.put("Entre 4 murs", "Bekar", 154, "/api/song/Bekar - Entre 4 murs (clip officiel).mp3", 1, p)
+      Song.API.put("Présidentiel flow", "H JeuneCrack", 161, "/api/song/H JeuneCrack - Présidentiel flow.mp3", 2, p)
+    end
+  end
 
   def start_link(playlist_id) do
     name = via_tuple(playlist_id)
@@ -20,9 +30,12 @@ defmodule RadioPlayer do
   end
 
   @impl true
-  def init(playlist_id) do
+  def init(playlist_name) do
+    init_db()
+
+    [p] = Playlist.API.get(playlist_name)
     state = %{
-      songs: Playlist.API.get(playlist_id) || [],
+      songs: p.songs || [],
       current_song: 0,
       s_played: 0
     }

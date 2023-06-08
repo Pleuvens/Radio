@@ -3,7 +3,7 @@ defmodule Radio.Repo.Migrations.PlaylistBelongsToUser do
 
   def change do
     alter table(:playlists) do
-      add :user, references(:users)
+      add :user_id, references(:users)
     end
   end
 end

@@ -1,6 +1,7 @@
 defmodule Playlist do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   schema "playlists" do
     field :name, :string
@@ -17,19 +18,18 @@ defmodule Playlist do
   end
 
   defmodule API do
-    def get(_id) do
-      # Path.wildcard("/home/fervil/Documents/radio/data/songs/*.mp3")
-      # |> Enum.map(fn p -> "/api/song/#{Path.split(p) |> List.last()}" end)
-      [
-        %{
-          name: "/api/song/Bekar - Entre 4 murs (clip officiel).mp3",
-          duration: 154
-        },
-        %{
-          name: "/api/song/H JeuneCrack - Présidentiel flow.mp3",
-          duration: 161
-        }
-      ]
+    def get(name) do
+      query = from p in Playlist,
+        join: s in assoc(p, :songs),
+        where: p.name == ^name,
+        preload: [songs: s]
+      Radio.Repo.all(query)
+      |> Enum.map(fn p -> %{id: p.id, name: p.name, songs: Enum.map(p.songs, fn s -> %{id: s.id, name: s.name, artists: s.artists, duration: s.duration, path: s.path} end)} end)
+    end
+
+    def put(name) do
+      Playlist.changeset(%Playlist{}, %{name: name})
+      |> Radio.Repo.insert()
     end
   end
 end
