@@ -22,7 +22,7 @@ defmodule RadioPlayer do
 
   defp play_song(song, time) do
     IO.inspect("Now playing #{song.name} at #{time} seconds")
-    Phoenix.PubSub.broadcast(Radio.PubSub, "radio_playertest", %{song: song, time: time})
+    Phoenix.PubSub.broadcast(Radio.PubSub, "radio_playertest", {:play_next_song, %{song: song, time: time}})
   end
 
   def get_current_song(playlist_id) do

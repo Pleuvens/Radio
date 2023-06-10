@@ -18,4 +18,8 @@ defmodule RadioWeb.RadioPlayer do
   def handle_event("stop_player", _params, socket) do
     {:noreply, push_event(socket, "stop-player", %{})}
   end
+
+  def handle_info({:play_next_song, data}, socket) do
+    {:noreply, push_event(socket, "start-player", %{song: data.song, time: data.time})}
+  end
 end
