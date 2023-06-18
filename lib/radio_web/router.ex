@@ -17,7 +17,14 @@ defmodule RadioWeb.Router do
   scope "/", RadioWeb do
     pipe_through :browser
 
-    live "/", RadioPlayer
+    get "/", LoginController, :show
+    get "/auth/google/callback", GoogleAuthController, :index
+  end
+
+  scope "/player", RadioWeb do
+    pipe_through :browser
+
+    live "/:name", RadioPlayer
   end
 
   scope "/api", RadioWeb do
