@@ -14,17 +14,24 @@ defmodule RadioWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # TODO: Finalize user management
+  #scope "/", RadioWeb do
+  #  pipe_through :browser
+
+  # get "/", LoginController, :show
+  #  get "/auth/google/callback", GoogleAuthController, :index
+  #end
+
+  #scope "/player", RadioWeb do
+  #  pipe_through :browser
+
+  #  live "/:name", RadioPlayer
+  #end
+
   scope "/", RadioWeb do
     pipe_through :browser
 
-    get "/", LoginController, :show
-    get "/auth/google/callback", GoogleAuthController, :index
-  end
-
-  scope "/player", RadioWeb do
-    pipe_through :browser
-
-    live "/:name", RadioPlayer
+    live "/", RadioPlayer
   end
 
   scope "/api", RadioWeb do

@@ -36,6 +36,9 @@ window.addEventListener("phx:start-player", (e) => {
   audio.src = e.detail.song.path
   audio.currentTime = e.detail.time
   audio.play()
+  let btn = document.getElementById("start-btn")
+  btn.disabled = true
+  btn.style.display = "none"
 })
 window.addEventListener("phx:stop-player", (e) => {
   let audio = document.getElementById("player")

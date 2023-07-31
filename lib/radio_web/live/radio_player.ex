@@ -16,7 +16,9 @@ defmodule RadioWeb.RadioPlayer do
   end
 
   def handle_event("stop_player", _params, socket) do
-    {:noreply, push_event(socket, "stop-player", %{})}
+    # TODO: user management system with rights on playlists
+    #{:noreply, push_event(socket, "stop-player", %{})}
+    {:noreply, socket}
   end
 
   def handle_info({:play_next_song, data}, socket) do

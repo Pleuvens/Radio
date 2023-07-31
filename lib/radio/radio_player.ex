@@ -41,12 +41,13 @@ defmodule RadioPlayer do
     }
 
     play_song(Enum.at(state.songs, state.current_song), state.s_played)
-    {:ok, state, 1000}
+    Process.send_after(self(), :timeout, 1000)
+    {:ok, state}
   end
 
   @impl true
   def handle_call(:get_current_song, _from, state) do
-    {:reply, state, state, 10}
+    {:reply, state, state}
   end
 
   @impl true
@@ -54,7 +55,8 @@ defmodule RadioPlayer do
     new_elapsed_time = state.s_played + 1
     song = Enum.at(state.songs, state.current_song)
     if song.duration - new_elapsed_time > 0 do
-      {:noreply, %{state | s_played: new_elapsed_time}, 1000}
+      Process.send_after(self(), :timeout, 1000)
+      {:noreply, %{state | s_played: new_elapsed_time}}
     else
       next_song = cond do
         state.current_song + 1 >= length(state.songs) -> 0
@@ -62,7 +64,8 @@ defmodule RadioPlayer do
       end
 
       play_song(Enum.at(state.songs, next_song), 0)
-      {:noreply, %{state | current_song: next_song, s_played: 0}, 1000}
+      Process.send_after(self(), :timeout, 1000)
+      {:noreply, %{state | current_song: next_song, s_played: 0}}
     end
   end
 end
