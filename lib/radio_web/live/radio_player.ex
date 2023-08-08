@@ -6,7 +6,6 @@ defmodule RadioWeb.RadioPlayer do
   def mount(_params, _token, socket) do
     playlist_id = "test"
     if connected?(socket), do: Phoenix.PubSub.subscribe(Radio.PubSub, @topic <> playlist_id)
-    RadioPlayer.start_link(playlist_id)
     {:ok, assign(socket, %{})}
   end
 

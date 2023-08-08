@@ -20,7 +20,9 @@ defmodule Radio.Application do
       RadioWeb.Endpoint,
       # Start a worker by calling: Radio.Worker.start_link(arg)
       # {Radio.Worker, arg}
-      {Registry, keys: :unique, name: :radio_player_registry}
+      {Registry, keys: :unique, name: :radio_player_registry},
+      # Start the player
+      {RadioPlayer, ["test"]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
