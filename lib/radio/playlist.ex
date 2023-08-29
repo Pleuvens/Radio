@@ -21,7 +21,7 @@ defmodule Playlist do
     def get(name) do
       query = from p in Playlist,
         join: s in assoc(p, :songs),
-        where: p.name == ^name,
+        where: p.name in ^name,
         preload: [songs: s]
       Radio.Repo.all(query)
       |> Enum.map(fn p -> %{id: p.id, name: p.name, songs: Enum.map(p.songs, fn s -> %{id: s.id, name: s.name, artists: s.artists, duration: s.duration, path: s.path} end)} end)
