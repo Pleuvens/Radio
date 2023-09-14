@@ -6,13 +6,13 @@ defmodule RadioPlayer do
     query = from p in Playlist, where: p.name == "test"
     if !Radio.Repo.exists?(query) do
       {_, p} = Playlist.API.put("test")
-      Song.API.put("Entre 4 murs", "Bekar", 154, "/api/song/Bekar - Entre 4 murs (clip officiel).mp3", 1, p)
-      Song.API.put("Présidentiel flow", "H JeuneCrack", 161, "/api/song/H JeuneCrack - Présidentiel flow.mp3", 2, p)
+      Song.API.put("Entre 4 murs", "Bekar", 154, "https://lpradio-dev.s3.eu-west-3.amazonaws.com/Bekar+-+Entre+4+murs+(clip+officiel).mp3", 1, p)
+      Song.API.put("Présidentiel flow", "H JeuneCrack", 161, "https://lpradio-dev.s3.eu-west-3.amazonaws.com/H+JeuneCrack+-+Pr%C3%A9sidentiel+flow.mp3", 2, p)
     end
   end
 
   def start_link(playlist_id) do
-    name = via_tuple(playlist_id)
+    name = via_tuple(Enum.at(playlist_id, 0))
     GenServer.start_link(__MODULE__, playlist_id, name: name)
   end
 
@@ -42,7 +42,7 @@ defmodule RadioPlayer do
 
     play_song(Enum.at(state.songs, state.current_song), state.s_played)
     Process.send_after(self(), :timeout, 1000)
-    {:ok, state}
+    {:ok, IO.inspect(state, label: "RADIO PLAYER STARTED")}
   end
 
   @impl true

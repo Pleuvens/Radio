@@ -50,7 +50,10 @@ defmodule Radio.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:elixir_auth_google, "~> 1.6.9"}
+      {:elixir_auth_google, "~> 1.6.9"},
+      {:ex_aws, "~> 2.0"},
+      {:ex_aws_s3, "~> 2.0"},
+      {:sweet_xml, "~> 0.6"}
     ]
   end
 

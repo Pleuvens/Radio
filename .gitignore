@@ -40,3 +40,6 @@ npm-debug.log
 
 # Ignore songs registered
 /data/
+
+# Ignore env files
+.env
