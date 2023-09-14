@@ -39,6 +39,8 @@ window.addEventListener("phx:start-player", (e) => {
   let btn = document.getElementById("start-btn")
   btn.disabled = true
   btn.style.display = "none"
+  let title = document.getElementById("current-song-title")
+  title.innerHTML = e.detail.song.artists + " - " + e.detail.song.name
 })
 window.addEventListener("phx:stop-player", (e) => {
   let audio = document.getElementById("player")

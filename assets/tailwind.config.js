@@ -14,8 +14,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'black-bg': "#212529",
-        'white-elt': "#f8f9fa"
+        'primary-bg-color': "#FFF1F8",
+        'primary-text-color': "#D93383"
       }
     },
   },
