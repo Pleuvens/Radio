@@ -20,22 +20,28 @@ if System.get_env("PHX_SERVER") do
   config :radio, RadioWeb.Endpoint, server: true
 end
 
+# Configure your database
+config :radio, Radio.Repo,
+  username: System.get_env("DB_USERNAME"),
+  password: System.get_env("DB_PASSWORD"),
+  hostname: System.get_env("DB_HOSTNAME"),
+  database: System.get_env("DB_NAME"),
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
+# Configure AWS S3
+config :ex_aws,
+  json_codec: Jason,
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY")
+
+# Configure Google Auth
+config :elixir_auth_google,
+  client_id: System.get_env("GOOGLE_CLIENT_ID"),
+  client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
 if config_env() == :prod do
-  database_url =
-    System.get_env("DATABASE_URL") ||
-      raise """
-      environment variable DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
-      """
-
-  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
-
-  config :radio, Radio.Repo,
-    # ssl: true,
-    url: database_url,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: maybe_ipv6
-
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
   # want to use a different value for prod and you most likely don't want
