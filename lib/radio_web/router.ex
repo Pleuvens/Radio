@@ -34,11 +34,11 @@ defmodule RadioWeb.Router do
     live "/", RadioPlayer
   end
 
-  scope "/api", RadioWeb do
-    pipe_through :api
+  #scope "/api", RadioWeb do
+  #  pipe_through :api
 
-    get "/song/:name", RadioController, :get_song
-  end
+  #  get "/song/:name", RadioController, :get_song
+  #end
 
   # Other scopes may use custom stacks.
   # scope "/api", RadioWeb do

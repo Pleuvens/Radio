@@ -54,7 +54,7 @@ defmodule RadioPlayer do
 
     play_song(Enum.at(state.songs, state.current_song), state.s_played)
     Process.send_after(self(), :timeout, 1000)
-    {:ok, IO.inspect(state, label: "RADIO PLAYER STARTED")}
+    {:ok, state}
   end
 
   @impl true

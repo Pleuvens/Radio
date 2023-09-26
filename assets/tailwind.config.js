@@ -18,6 +18,9 @@ module.exports = {
         'primary-text-color': "#D93383"
       }
     },
+    fontFamily: {
+      'mono': 'Lucida Console, Courier New, monospace'
+    }
   },
   plugins: [
     require("@tailwindcss/forms"),
