@@ -27,8 +27,7 @@ jobs:
         image: postgres:12
         ports: ['5432:5432']
         env:
-          TEST_POSTGRES_USERNAME: dev
-          TEST_POSTGRES_PASSWORD: dev
+          POSTGRES_PASSWORD: dev
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
