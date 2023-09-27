@@ -11,12 +11,17 @@ defmodule RadioWeb.RadioPlayer do
 
   def handle_event("start_player", _params, socket) do
     r = RadioPlayer.get_current_song("test")
-    {:noreply, push_event(socket, "start-player", %{song: Enum.at(r.songs, r.current_song), time: r.s_played})}
+
+    {:noreply,
+     push_event(socket, "start-player", %{
+       song: Enum.at(r.songs, r.current_song),
+       time: r.s_played
+     })}
   end
 
   def handle_event("stop_player", _params, socket) do
     # TODO: user management system with rights on playlists
-    #{:noreply, push_event(socket, "stop-player", %{})}
+    # {:noreply, push_event(socket, "stop-player", %{})}
     {:noreply, socket}
   end
 

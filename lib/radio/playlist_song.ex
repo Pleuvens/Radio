@@ -13,7 +13,7 @@ defmodule PlaylistSong do
     end
 
     def put(position, playlist, song) do
-      %PlaylistSong{position: position, playlist: playlist, song:  song}
+      %PlaylistSong{position: position, playlist: playlist, song: song}
       |> Radio.Repo.insert()
     end
   end

@@ -23,8 +23,10 @@ defmodule Song do
     end
 
     def put(name, artists, duration, path, position, playlist) do
-      {_, song} = Song.changeset(%Song{}, %{name: name, artists: artists, duration: duration, path: path})
+      {_, song} =
+        Song.changeset(%Song{}, %{name: name, artists: artists, duration: duration, path: path})
         |> Radio.Repo.insert()
+
       PlaylistSong.API.put(position, playlist, song)
       song
     end

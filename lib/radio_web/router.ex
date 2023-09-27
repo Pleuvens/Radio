@@ -15,18 +15,18 @@ defmodule RadioWeb.Router do
   end
 
   # TODO: Finalize user management
-  #scope "/", RadioWeb do
+  # scope "/", RadioWeb do
   #  pipe_through :browser
 
   # get "/", LoginController, :show
   #  get "/auth/google/callback", GoogleAuthController, :index
-  #end
+  # end
 
-  #scope "/player", RadioWeb do
+  # scope "/player", RadioWeb do
   #  pipe_through :browser
 
   #  live "/:name", RadioPlayer
-  #end
+  # end
 
   scope "/", RadioWeb do
     pipe_through :browser
@@ -34,11 +34,11 @@ defmodule RadioWeb.Router do
     live "/", RadioPlayer
   end
 
-  #scope "/api", RadioWeb do
+  # scope "/api", RadioWeb do
   #  pipe_through :api
 
   #  get "/song/:name", RadioController, :get_song
-  #end
+  # end
 
   # Other scopes may use custom stacks.
   # scope "/api", RadioWeb do
