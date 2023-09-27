@@ -6,12 +6,18 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :radio, Radio.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: System.get_env("TEST_POSTGRES_USERNAME"),
+  password: System.get_env("TEST_POSTGRES_PASSWORD"),
   hostname: "localhost",
   database: "radio_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
+
+# Configure AWS S3
+config :ex_aws,
+  json_codec: Jason,
+  access_key_id: System.get_env("AWS_ACCESS_KEY_ID"),
+  secret_access_key: System.get_env("AWS_SECRET_ACCESS_KEY")
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
