@@ -6,9 +6,9 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :radio, Radio.Repo,
-  username: System.get_env("TEST_POSTGRES_USERNAME"),
-  password: System.get_env("TEST_POSTGRES_PASSWORD"),
-  hostname: "localhost",
+  username: "postgres",
+  password: System.get_env("POSTGRES_PASSWORD"),
+  hostname: System.get_env("POSTGRES_HOST"),
   database: "radio_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
