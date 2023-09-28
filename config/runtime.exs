@@ -28,6 +28,7 @@ if config_env() != :test do
     hostname: System.get_env("DB_HOSTNAME"),
     database: System.get_env("DB_NAME"),
     stacktrace: true,
+    socket_options: [:inet6],
     show_sensitive_data_on_connection_error: true,
     pool_size: 10
 
