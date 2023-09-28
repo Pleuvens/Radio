@@ -20,7 +20,7 @@ if System.get_env("PHX_SERVER") do
   config :radio, RadioWeb.Endpoint, server: true
 end
 
-if config_env() != "test" do
+if config_env() != :test do
   # Configure your database
   config :radio, Radio.Repo,
     username: System.get_env("DB_USERNAME"),
