@@ -9,7 +9,7 @@ config :radio, Radio.Repo,
   username: "postgres",
   password: System.get_env("POSTGRES_PASSWORD"),
   hostname: System.get_env("POSTGRES_HOST"),
-  database: "radio_test#{System.get_env("MIX_TEST_PARTITION")}",
+  database: "radio_test",
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
