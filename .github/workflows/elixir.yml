@@ -28,10 +28,7 @@ jobs:
         ports: ['5432:5432']
         env:
           POSTGRES_PASSWORD: postgres
-          DB_USERNAME: postgres
-          DB_PASSWORD: postgres
-          DB_NAME: radio_test
-          DB_HOSTNAME: localhost
+          POSTGRES_HOST: localhost
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
