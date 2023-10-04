@@ -4,13 +4,13 @@ defmodule RadioWeb.RadioPlayer do
   @topic "radio_player"
 
   def mount(_params, _token, socket) do
-    playlist_id = "test"
+    playlist_id = "default"
     if connected?(socket), do: Phoenix.PubSub.subscribe(Radio.PubSub, @topic <> playlist_id)
     {:ok, assign(socket, %{})}
   end
 
   def handle_event("start_player", _params, socket) do
-    r = RadioPlayer.get_current_song("test")
+    r = RadioPlayer.get_current_song("default")
 
     {:noreply,
      push_event(socket, "start-player", %{

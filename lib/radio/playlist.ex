@@ -22,7 +22,7 @@ defmodule Playlist do
       query =
         from p in Playlist,
           join: s in assoc(p, :songs),
-          where: p.name in ^name,
+          where: p.name == ^name,
           preload: [songs: s]
 
       Radio.Repo.all(query)

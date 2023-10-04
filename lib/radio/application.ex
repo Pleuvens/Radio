@@ -22,7 +22,7 @@ defmodule Radio.Application do
       # {Radio.Worker, arg}
       {Registry, keys: :unique, name: :radio_player_registry},
       # Start the player
-      {RadioPlayer, ["test"]}
+      {RadioPlayer, "default"}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

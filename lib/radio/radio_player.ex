@@ -2,11 +2,11 @@ defmodule RadioPlayer do
   use GenServer
   import Ecto.Query
 
-  def init_db do
-    query = from p in Playlist, where: p.name == "test"
+  def init_db(playlist_name) do
+    query = from p in Playlist, where: p.name == ^playlist_name
 
     if !Radio.Repo.exists?(query) do
-      {_, p} = Playlist.API.put("test")
+      {_, p} = Playlist.API.put(playlist_name)
 
       Song.API.put(
         "Entre 4 murs",
@@ -137,7 +137,7 @@ defmodule RadioPlayer do
   end
 
   def start_link(playlist_id) do
-    name = via_tuple(Enum.at(playlist_id, 0))
+    name = via_tuple(playlist_id)
     GenServer.start_link(__MODULE__, playlist_id, name: name)
   end
 
@@ -145,12 +145,12 @@ defmodule RadioPlayer do
     {:via, Registry, {:radio_player_registry, playlist_id}}
   end
 
-  defp play_song(song, time) do
+  defp play_song(playlist_id, song, time) do
     IO.inspect("Now playing #{song.name} at #{time} seconds")
 
     Phoenix.PubSub.broadcast(
       Radio.PubSub,
-      "radio_playertest",
+      "radio_player#{playlist_id}",
       {:play_next_song, %{song: song, time: time}}
     )
   end
@@ -161,17 +161,18 @@ defmodule RadioPlayer do
 
   @impl true
   def init(playlist_name) do
-    init_db()
+    init_db(playlist_name)
 
     [p] = Playlist.API.get(playlist_name)
 
     state = %{
+      name: playlist_name,
       songs: p.songs || [],
       current_song: 0,
       s_played: 0
     }
 
-    play_song(Enum.at(state.songs, state.current_song), state.s_played)
+    play_song(state.name, Enum.at(state.songs, state.current_song), state.s_played)
     Process.send_after(self(), :timeout, 1000)
     {:ok, state}
   end
@@ -196,7 +197,7 @@ defmodule RadioPlayer do
           true -> state.current_song + 1
         end
 
-      play_song(Enum.at(state.songs, next_song), 0)
+      play_song(state.name, Enum.at(state.songs, next_song), 0)
       Process.send_after(self(), :timeout, 1000)
       {:noreply, %{state | current_song: next_song, s_played: 0}}
     end
