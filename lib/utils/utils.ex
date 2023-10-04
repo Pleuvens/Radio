@@ -93,7 +93,9 @@ defmodule Utils do
           "https://lpradio-dev.s3.eu-west-3.amazonaws.com/99+en+peuf.mp3"
         )
       ]
-      Enum.with_index(songs) |> Enum.each(fn {song, index} ->
+
+      Enum.with_index(songs)
+      |> Enum.each(fn {song, index} ->
         PlaylistSong.API.put(index, p, song)
       end)
     end
