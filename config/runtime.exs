@@ -41,7 +41,7 @@ if config_env() != :test do
       socket_options: [:inet6],
       show_sensitive_data_on_connection_error: true,
       pool_size: 10
-  end  
+  end
 
   # Configure AWS S3
   config :ex_aws,
