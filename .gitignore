@@ -43,3 +43,6 @@ npm-debug.log
 
 # Ignore env files
 .env
+
+# Ignore elixir-tools
+.elixir-tools
